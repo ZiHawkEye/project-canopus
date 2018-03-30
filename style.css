@@ -1,14 +1,5 @@
 body {
-    width: 100%;
     background-image: url("models/banner.png");
     background-repeat: no-repeat;
     background-color: burlywood;
-}
-
-.container-fluid {
-    height: 100%;
-}
-
-.container-fluid .row {
-    height: 50%; 
 }
