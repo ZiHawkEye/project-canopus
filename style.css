@@ -1,5 +1,30 @@
+/* Style guides for pc pages start here */
 body {
     background-image: url("models/banner.png");
     background-repeat: no-repeat;
-    background-color: burlywood;
 }
+
+/* Implementation of grid layout begins here */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 15px;
+    margin: auto;
+}
+
+.col {
+    background: aquamarine;
+}
+.span2 { grid-column: auto / span 2;}
+.span3 { grid-column: auto / span 3;}
+.span4 { grid-column: auto / span 4;}
+.span5 { grid-column: auto / span 5;}
+.span6 { grid-column: auto / span 6;}
+.span7 { grid-column: auto / span 7;}
+.span8 { grid-column: auto / span 8;}
+.span9 { grid-column: auto / span 9;}
+.span10 { grid-column: auto / span 10;}
+.span11 { grid-column: auto / span 11;}
+.span12 { grid-column: auto / span 12;}
