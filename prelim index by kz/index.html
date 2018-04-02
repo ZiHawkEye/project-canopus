@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- for responsive web design -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- refreshes every few seconds -->
+	<meta http-equiv="X-UA-Compatible" content="ie-edge">
+	<title>Document</title>
+	<link href="indexstyle.css" rel="stylesheet">
+	<script src="indexscript.js"></script>
+</head>
+<!-- tbh i quite dislike the colour scheme will have to find a better one later -->
+<body>
+	<!-- try to use semantic tags instead of divs to improve accessibility>
+	<!-- navbar -->
+	<nav class="navbar">
+		<!-- logo -->
+		<a href="#home">
+			<img src="Logo.svg" id="logo" alt="Canopus" style="width:40px;height:40px;border:0;">
+		</a> 
+		
+		<!-- search bar -->
+		<form>
+			<!-- name is not supported in html5. use id instead -->
+			<input type="text" id="search" placeholder="Search">
+		</form>
+		<!-- sign up and login -->
+		<div>
+			<a href="#signup">Sign Up</a>
+			<a href="#login">Login</a>
+		</div>
+	</nav>
+	
+	<div class="banner">
+	<h1> Resources to make your NUS life easier </h1>
+	<h4> For students, by students </h4>
+	</div>
+	
+	<!-- calender -->
+	<div class="calender">
+	<p> 
+		Upcoming events (calender goes here showing miscellaneous activities)
+	</p>
+	</div>
+	
+	<!-- sidebar? with about? -->
+	<!-- navigational links -->
+	<!-- uses available resources created by current/past students -->
+	<!-- look into cors, restful apis, scrapers(most impt) -->
+	<div class="container">
+	<div class="tile"> 
+		<!-- a tags are used for hyperlinks in html5 -->
+		<!-- look into span -->
+		<img src="contract.svg" style="width:40px;height:40px;border:0;">
+		<a href="#">Study for your course</a>
+	</div>
+	<div class="tile"> 
+		<img src="download.svg" style="width:40px;height:40px;border:0;">
+		<a href="https://github.com/nusmodifications/nus-exams-downloader">Download exams</a>
+	</div>
+	<div class="tile"> 
+		<img src="calender.svg" style="width:40px;height:40px;border:0;">
+		<a href="https://nusmods.com/timetable/sem-2">Plan your modules</a>
+	</div>
+	<div class="tile"> 
+		<img src="placeholder.svg" style="width:40px;height:40px;border:0;">
+		<a href="https://nusmods.com/venues">Organize study sessions, find free rooms</a>
+	</div>
+	</div>
+	
+	
+	
+</body>
+</html>
