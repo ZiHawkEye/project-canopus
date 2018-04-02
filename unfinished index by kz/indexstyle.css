@@ -1,0 +1,73 @@
+/* body */
+body {
+	background: #FFFFFF;
+}
+
+
+/* sets proportions for elements in navbar using flexbox */
+/* this doesn't work if you use "nav .navbar" but works if either "nav" or ".navbar" is used */
+.navbar {
+	/* how to sticky flex bar to top? look into absolute positioning and z index */
+	display: flex; 
+	flex-direction: row; /* default */
+	/* ensure all items fit in one line */
+	flex-wrap: nowrap; /* default */
+	justify-content: space-between;
+	align-items: center;
+	background-color: transparent;
+}
+
+/* styles the search bar */
+form {
+	width: 200px;
+	box-sizing: border-box;
+	display: flex;
+	background-color: inherit;
+}
+
+#search {
+    width: 100%;
+	/*defines if width is inclusive of padding and borders or only refers to content*/
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+	font-family: arial;
+	/* can't seem to insert background image into search bar */
+    /* background-image: url("searchicon.png"); */
+    background-color: inherit;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 0.5em; 
+	-webkit-transition: background-color 0.4s ease-in-out;/* safari */
+    transition: background-color 0.4s ease-in-out;
+}
+
+/* search bar turns white when you click on it */
+#search:focus {
+	background-color: white;
+}
+
+/* styles the signup and login */
+ul {
+	display: flex;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+li a {
+	font-family: arial;
+	font-size: 16px;
+	color: grey;
+	padding: 0.5em;
+	/* removes underline */
+	text-decoration: none;
+	-webkit-transition: background-color 0.4s ease-in-out;/* safari */
+    transition: background-color 0.4s ease-in-out;
+}	
+
+li a:hover {
+	color: orange;
+	text-decoration: underline;
+}

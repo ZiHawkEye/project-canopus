@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- for responsive web design -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- refreshes every few seconds -->
+	<meta http-equiv="X-UA-Compatible" content="ie-edge">
+	<title>Document</title>
+	<link href="indexstyle.css" rel="stylesheet">
+	<script src="indexscript.js"></script>
+</head>
+<body>
+	<!-- try to use semantic tags instead of divs to improve accessibility>
+	<!-- navbar -->
+	<nav class="navbar">
+		<!-- logo -->
+		<a href="#home">
+			<img src="Logo.svg" id="logo" alt="Canopus" style="width:40px;height:40px;border:0;">
+		</a> 
+		
+		<!-- search bar -->
+		<form>
+			<!-- name is not supported in html5. use id instead -->
+			<input type="text" id="search" placeholder="Search">
+		</form>
+		<!-- sign up and login -->
+		<ul>
+			<li><a href="#signup">Sign Up</a></li>
+			<li><a href="#login">Login</a></li>
+		</ul>
+	</nav>
+	
+	<!-- banner -->
+	<!--
+	<picture>
+		<img src="" alt="Tools to make your life easier" id="banner">
+	</picture>
+	-->
+	
+	<!-- sidebar? with about? -->
+	<!-- navigational links -->
+	<!-- uses available resources created by current/past students -->
+	<!-- look into cors, restful apis, scrapers(most impt) -->
+	<div>
+	<p> 
+		<!-- a tags are used for hyperlinks in html5 -->
+		<!-- look into span -->
+		<a href="#">study for your course</a>
+	</p>
+	<p> 
+		<a href="https://github.com/nusmodifications/nus-exams-downloader">download exams</a>
+	</p>
+	<p> 
+		<a href="https://nusmods.com/timetable/sem-2">plan your modules</a>
+	</p>
+	<p> 
+		<a href="https://nusmods.com/venues">organize study sessions, find free rooms</a>
+	</p>
+	</div>
+	
+	<!-- calender -->
+	<div class="calender">
+	<p> 
+		Upcoming events
+	</p>
+	</div>
+	
+</body>
+</html>
