@@ -1,17 +1,11 @@
-body {
-    display: grid;
-    justify-items: center;
-}
 
-/* defines the card class and children below */
-* {
-    box-sizing: border-box;
-}
 .card {
-    height: 300px;
-    width: 400px;
+    height: 100%;
+    width: 100%;
     position: relative;
     overflow: hidden;
+    margin: 0;
+    border-radius: 0.3rem;
 }
 
 .card > img {
@@ -26,27 +20,41 @@ body {
     width: 100%;
     padding: 0 1rem 0 1rem;
 
-    color: white;
+    color: #24272b;
     font-family: Arial;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(153, 225, 217, 0.8);
 
     position: absolute;
     bottom: 0;
 
     transition: 0.4s;
+    display: grid;
+    grid-template: auto / 1fr 1fr;
+    grid-row-gap: 0.5em;
+
 }
 
 .card > figcaption > .title {
-    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0;
+    font-size: 2rem;
 }
 
 .card > figcaption > .topic {
+    margin: 0;
     text-align: center;
-    font-size: 10px;
+    font-weight: 400;
+    font-size: 1rem;
+    align-self: end;
 }
 /* when parent element is hovered, do something to child */
 .card:hover > figcaption {
     height: 40%;
-    padding: 1rem;
+    padding: 1em;
 }
 
+.card .description {
+    margin: 0;
+    grid-column: span 2;
+}
