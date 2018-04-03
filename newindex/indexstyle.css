@@ -1,0 +1,52 @@
+body {
+    display: grid;
+    justify-items: center;
+}
+
+/* defines the card class and children below */
+* {
+    box-sizing: border-box;
+}
+.card {
+    height: 300px;
+    width: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card > img {
+    height: 100%;
+    width: 100%;
+}
+
+.card > figcaption {
+    /* border box only affects the border - padding can overflow */
+    box-sizing: border-box;
+    height: 0;
+    width: 100%;
+    padding: 0 1rem 0 1rem;
+
+    color: white;
+    font-family: Arial;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    position: absolute;
+    bottom: 0;
+
+    transition: 0.4s;
+}
+
+.card > figcaption > .title {
+    font-size: 20px;
+}
+
+.card > figcaption > .topic {
+    text-align: center;
+    font-size: 10px;
+}
+/* when parent element is hovered, do something to child */
+.card:hover > figcaption {
+    height: 40%;
+    padding: 1rem;
+}
+
