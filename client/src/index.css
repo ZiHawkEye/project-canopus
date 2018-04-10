@@ -1,0 +1,8 @@
+@import url(styles/Grid.css);
+@import url(styles/Navbar.css);
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
