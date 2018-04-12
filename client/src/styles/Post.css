@@ -1,0 +1,44 @@
+/* defines read more behaviour */
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	max-height: 7em;
+	position: relative;
+	overflow: hidden;
+    padding: 20px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.8s;
+}
+
+.post > .read-more { 
+    /* centralize button */
+	position: absolute; 
+    bottom: 0; 
+    text-align: center; 
+	
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #24272b;
+    background: transparent;
+    
+    padding: 1em 2em;
+    border: none;
+    border-radius: 0.5em;
+    margin: 0; 
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.read-more:hover {
+	background-color: #ffd106c0;
+}
+
+/* when readmore is clicked */
+/* .class1.class2 selects elements with both those classnames
+.class1 .class2 selects class2 elements that are children of class1 elements */
+.post.extend {
+    max-height: 100em;
+    overflow: visible;
+}

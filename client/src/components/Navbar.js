@@ -12,10 +12,10 @@ class Navbar extends React.Component {
                 </div>
                     <div className="navlinks">
                         <ul>
-                            <li><a href="#home" className="btn">Home</a></li>
-                            <li><a href="#notes" className="btn">Notes</a></li>
-                            <li><a href="#blog" className="btn">Blog</a></li>
-                            <li><a href="#about" className="btn">About</a></li>
+                            <li><a href="/" className="btn">Home</a></li>
+                            <li><a href="notes" className="btn">Notes</a></li>
+                            <li><a href="blog" className="btn">Blog</a></li>
+                            <li><a href="about" className="btn">About</a></li>
                         </ul>
                     </div>
                 </nav>

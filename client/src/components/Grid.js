@@ -1,12 +1,18 @@
 import React from 'react';
 import Card from './Card';
 
-class Grid extends React.Component {
+class Feed extends React.Component {
+    constructor(props) {
+        super(props) 
+        this.state = {
+            content: {this.props.content}
+        }
+    }
 
     render() {
         return (
             <div className="grid">
-                <Card />
+                < />
                 <Card />
             </div>
         );

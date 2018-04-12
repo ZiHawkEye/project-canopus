@@ -1,0 +1,17 @@
+@import url(Card.css);
+
+.home {
+    display: flex;
+    flex-direction: column;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+/* defines appearance of feed component */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em 1em;
+    grid-auto-rows: minmax(300px, auto);
+    margin: 10px;
+}

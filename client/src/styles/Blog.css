@@ -1,0 +1,9 @@
+@import url(Post.css);
+@import url(Search.css);
+
+.blog {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 1em;
+    grid-auto-rows: minmax(100px, auto);
+}

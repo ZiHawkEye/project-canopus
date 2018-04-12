@@ -1,0 +1,14 @@
+.search {
+    border: none;
+    border-radius: 0.2rem;
+    background: transparent;
+    color: #ccc;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.search:focus {
+    color: #24272b;
+    background: #ccc;
+}

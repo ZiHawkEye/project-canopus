@@ -1,11 +1,12 @@
 import React from 'react';
+import Post from '../components/Post'
 
 class About extends React.Component {
 	
 	render() {
 		return (
 				<div>
-					<h1>About Page</h1>
+					<Post />
 				</div>
 			);
 	}

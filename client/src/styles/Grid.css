@@ -1,8 +1,0 @@
-@import url(Card.css);
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1em 1em;
-    grid-auto-rows: minmax(300px, auto);
-}
