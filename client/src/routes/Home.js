@@ -1,29 +1,41 @@
 import React from 'react';
-import Feed from '../components/Feed';
+import '../styles/Home.css';
 import Card from '../components/Card';
 
 class Home extends React.Component {
-	// constructor(props) {
-	// 	super(props) 
-	// 	this.state = {
-	// 		// trying to implement style in component - prob not best practice but good for dynamic rendering
-	// 		style: {
-	// 			display: 'grid',
-	// 			gridTemplateColumns: '1fr 2fr 1fr',
-	// 			gridGap: '1em',
-	// 			gridAutoRows: 'minmax(100px, auto)'
-	// 		}
-	// 	}
-	// }
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			popposts: []
+		}
+	}
+
+	componentDidMount() {
+		fetch("/api/card")
+			.then(res => res.json())
+			.then(result => {
+				this.setState({
+					popposts: result.cards
+				})
+			}, 
+			(error) => {
+				console.err(error);
+			})
+	}
 
 	render() {
+		var jsonposts = this.state.popposts
+		var feed = jsonposts.map(post => <Card img={post.img} title={post.title} topic={post.topic} desc={post.desc} />)
+
 		return (
 			<div className='home'>
 				{/* props.children is a special prop name */}
 				Popular Posts
-				<Feed classname='grid' num={2} children={<Card />}/>
+				<div className='grid'>{feed}</div>
+
 				Recent Posts
-				<Feed classname='grid' num={3} children={<Card />}/>
+				<div className='grid'>{feed}</div>
 			</div>
 		);
 	}

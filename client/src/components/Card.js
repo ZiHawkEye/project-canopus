@@ -1,17 +1,16 @@
 import React from 'react';
-import sexplosion from '../assets/sexplosion.jpg';
 
 class Card extends React.Component {
+    // define prop defaults?
+
     render() {
         return (
-            <figure class="card">
-            <img src={sexplosion} alt="cardimage"/>
+            <figure className="card">
+            <img src={this.props.img} alt="cardimage"/>
                 <figcaption>
-                    <h1 class="title">Title</h1>
-                    <h2 class="topic">Topic</h2>
-                    <p class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui, cum? Amet incidunt facilis labore aliquam,
-                        sint iusto dolor laudantium quibusdam illum ut inventore nam aut eum consequatur asperiores, deserunt
-                        harum!</p>
+                    <h1 className="title">{this.props.title}</h1>
+                    <h2 className="topic">{this.props.topic}</h2>
+                    <p className="description">{this.props.desc}</p>
                 </figcaption>
             </figure>
         )
