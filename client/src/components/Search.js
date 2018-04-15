@@ -4,7 +4,8 @@ class Search extends React.Component {
     constructor (props) {
         super (props)
         this.state = {
-            value: ''
+            value: '',
+            result: []
         }
 
         //there seems to be no need to bind the 'enter' keypress to a submit form action
@@ -14,18 +15,26 @@ class Search extends React.Component {
 
     handleChange(event) {  
         this.setState({value: event.target.value});
+        fetch(`/api/search?q=${this.state.value}`)
+            .then(res => res.json())
+            .then(result => {
+                this.setState({});
+                console.log(result);
+            })
     }
 
     handleSubmit(event) {
-        alert('Form Submitted(not really)');
         event.preventDefault();
     }
 
     render () {
         return (
+            <div>
             <form onSubmit={this.handleSubmit}>
                 <input className='search' type='text' placeholder='Find articles' onChange={this.handleChange}/>
             </form>
+            {this.state.result}
+            </div>
         );
     } 
 }
