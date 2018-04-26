@@ -1,0 +1,16 @@
+{
+  "name": "canoopuss",
+  "version": "1.0.0",
+  "description": "Project Canopus is started by 2 young fellas enrolling in NUS SoC.\r The aim of this project is to provide handwritten notes and documentation of lessons that these 2 young fellas attended, to facilitate learning and revision.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.0.14"
+  }
+}
