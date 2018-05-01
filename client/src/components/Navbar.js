@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/Logo.svg';
+// import logo from '../assets/Logo.svg';
 
 class Navbar extends React.Component {
 	
@@ -7,9 +7,9 @@ class Navbar extends React.Component {
 		return (
 			<div>
 				<nav className="navbar">
-                <div className="logo">
+                {/* <div className="logo">
                     <img src={logo} alt="Logo"/>
-                </div>
+                </div> */}
                     <div className="navlinks">
                         <ul>
                             <li><a href="/" className="btn">Home</a></li>

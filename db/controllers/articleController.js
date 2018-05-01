@@ -1,6 +1,7 @@
 const assert = require('assert');
 var Article = require('../models/article');
 
+// use curl to test POST, PUT, PATCH, DELETE methods
 // use req.params instead of req.query for readability of urls
 // optional params use req.query, else use req.params
 // look into optional params and middleware?
@@ -27,10 +28,9 @@ exports.article_search = function(req, res) {
     // encode json in url for query and sacrifice readability for laziness? yes
     // look into full text search for mongoose (wildcard text index)
     // otherwise implement manually: stop words, weighting, fields to search
-    var is_return_all = (req.query.is_return_all == "true") ? true : false;
-    var projectors = is_return_all ? null : req.query.projectors; // null is equivalent to 'author title desc date tags text'
+    var projectors = (req.query.projectors === undefined) ? null : decodeURI(req.query.projectors); // null is equivalent to 'author title desc date tags text'
 
-    // needs type casting? or hope for automatic type conversion
+    // needs type casting, cannot hope for automatic type conversion
     var {tailable, sort, limit, skip, maxscan, batchSize, comment, snapshot, readPreference, hint, maxTimeMs, collation} = req.query;
     var options = {tailable, sort, limit, skip, maxscan, batchSize, comment, snapshot, readPreference, hint, maxTimeMs, collation};
     // iterates through all properties and deletes all undefined fields, should not skip any fields even after deletion of a field
@@ -43,7 +43,7 @@ exports.article_search = function(req, res) {
 
     // search all fields with same values(no json), search particular fields with same values(no json), 
     // search particular fields with particular values and modifiers(uses json)
-    var is_json = (req.query.use_json == "true") ? true : false;
+    var is_json = (req.query.is_json == "true") ? true : false;
     if(is_json) {
         var conditions = (req.query.conditions === undefined) ? {} : JSON.parse(req.query.conditions); // should be a json string - needs further validation and processing
         assert.ok(conditions instanceof Object);
@@ -55,35 +55,30 @@ exports.article_search = function(req, res) {
     } else {
         var q = (req.query.q === undefined) ? "": req.query.q ;
         var keys = (req.query.keys === undefined) ? ["author", "title", "desc", "date", "tags", "text"] : eval(req.query.keys); // may need further validation and sanitisation
-        // console.log('q: ' + q);
-        // console.log('keys: ' + keys); 
-        // example url: /api/article/search?q=author&keys=["author", "title", "desc"]
         assert.ok(keys instanceof Array);
         var promise_array = keys.map(key => {
             var temp_query = Article.find({[key]: q}, projectors, options); // use regex and wildcards? not efficient though
-            // apparently if a callback function is included in .exec() no promise is returned?
+            // if a callback function is included no promise is returned?
             var temp_promise = temp_query.exec()
-            .then(result => result, err => {
-                // alternative: Promise.prototype.catch()
-                throw err;
-            });
+                .then(result => result, err => {
+                    // alternative: Promise.prototype.catch()
+                    throw err;
+                });
             assert.ok(temp_promise instanceof Promise);
             return temp_promise;
         });
-        // console.log('promise_array: ' + promise_array);
         var promise = Promise.all(promise_array)
-        .then(results_array => {
-            // console.log('results_array: ' + results_array);
-            var results = [];
-            var i, len;
-            // using for in loop is dangerous so don't
-            for(i = 0, len = results_array.length; i < len; i++) {
-                results = results.concat(results_array[i]);
-            }
-            res.send(results);
-        }, err => {
-            throw err;
-        });
+            .then(results_array => {
+                var results = [];
+                var i, len;
+                // using for in loop is dangerous so don't
+                for(i = 0, len = results_array.length; i < len; i++) {
+                    results = results.concat(results_array[i]);
+                }
+                res.send(results);
+            }, err => {
+                throw err;
+            });
     }
 };
 
@@ -117,7 +112,6 @@ exports.article_update = function(req, res) {
 
 // update article via GET - for testing only
 exports.article_update_get = function(req,res) {
-    console.log('executing update');
     var id = req.params.articleId;
     var doc = (req.query.doc === undefined) ? '{"author": "example update of author"}': req.query.doc; // doc should be a JSON string
     var doc = JSON.parse(doc);
@@ -143,7 +137,6 @@ exports.article_delete = function(req, res) {
 // Delete article via GET - for testing only
 exports.article_delete_get = function(req, res) {
     // Model.findOneAndRemove(conditions, options).exec().then(results => {}, err => {})
-    console.log('executing delete');
     var id = req.params.articleId;
     var query = Article.findOneAndRemove({_id: id});
     query.exec((err, results) => {

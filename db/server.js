@@ -16,7 +16,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 // express functionality defined below
-// router is only used for router modules(since you are using http methods) but for server you use app?
 const app = express();
 
 app.set("port", process.env.PORT || 3001);
