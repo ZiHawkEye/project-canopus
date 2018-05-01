@@ -1,8 +1,19 @@
 var User = require('../models/user');
 
-// search for a user via GET
+// important: implement hashing, pw authorization, validation, sanitisation, error handling
+
+// search for a user via POST
 exports.user_search = function(req, res) {
     
+};
+
+// search for a user via GET - for testing only
+exports.user_search_get = function(req, res) {
+    var {username, password} = req.query;
+    User.findOne({username, password}).exec((err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
 };
 
 // create new user via PUT
@@ -10,9 +21,28 @@ exports.user_create = function(req, res) {
     
 };
 
+// create new user via GET - for testing only
+exports.user_create_get = function(req, res) {
+    var {username, password} = req.query;
+    var promise = User.create({username, password}, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    })
+};
+
 // update user via PATCH
 exports.user_update = function(req, res) {
     
+};
+
+// update user via GET - for testing only
+exports.user_update_get = function(req, res) {
+    var {username, old_password, new_password} = req.query;
+    var query = User.findOneAndUpdate({username, password: old_password}, {password: new_password}, {new: true});
+    query.exec((err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
 };
 
 // delete user via DELETE
@@ -20,4 +50,12 @@ exports.user_delete = function(req, res) {
     
 };
 
-
+// delete user via GET - for testing only
+exports.user_delete_get = function(req, res) {
+    var {username, password} = req.query;
+    var query = User.findOneAndRemove({username, password});
+    query.exec((err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+};

@@ -3,15 +3,17 @@ var Article = require('../models/article');
 
 // use req.params instead of req.query for readability of urls
 // optional params use req.query, else use req.params
+// look into optional params and middleware?
+// when not to use arrow functions? does not allow binding of this
 
 // display an article via GET
 exports.article = function(req, res) {
-    var id = req.params.article_id;
+    var id = req.params.articleId; // id is a param is a string
     var query = Article.find({_id: id}, (err, results) => {
         if (err) throw err;
         // results contains article json
         res.json(results);
-    })
+    });
 };
 
 // search for articles via GET
@@ -26,7 +28,7 @@ exports.article_search = function(req, res) {
     // look into full text search for mongoose (wildcard text index)
     // otherwise implement manually: stop words, weighting, fields to search
     var is_return_all = (req.query.is_return_all == "true") ? true : false;
-    var projectors = is_return_all ? null : req.query.projectors; // null is equivalent to 'author, title, desc, date, tags, text'
+    var projectors = is_return_all ? null : req.query.projectors; // null is equivalent to 'author title desc date tags text'
 
     // needs type casting? or hope for automatic type conversion
     var {tailable, sort, limit, skip, maxscan, batchSize, comment, snapshot, readPreference, hint, maxTimeMs, collation} = req.query;
@@ -40,7 +42,7 @@ exports.article_search = function(req, res) {
     }
 
     // search all fields with same values(no json), search particular fields with same values(no json), 
-    // search particular fields with particular values and modifiers(uses_json)
+    // search particular fields with particular values and modifiers(uses json)
     var is_json = (req.query.use_json == "true") ? true : false;
     if(is_json) {
         var conditions = (req.query.conditions === undefined) ? {} : JSON.parse(req.query.conditions); // should be a json string - needs further validation and processing
@@ -52,7 +54,7 @@ exports.article_search = function(req, res) {
         });
     } else {
         var q = (req.query.q === undefined) ? "": req.query.q ;
-        var keys = (req.query.keys === undefined) ? ["author", "title", "desc", "date", "tags", "text"] : eval(req.query.keys);
+        var keys = (req.query.keys === undefined) ? ["author", "title", "desc", "date", "tags", "text"] : eval(req.query.keys); // may need further validation and sanitisation
         // console.log('q: ' + q);
         // console.log('keys: ' + keys); 
         // example url: /api/article/search?q=author&keys=["author", "title", "desc"]
@@ -60,15 +62,17 @@ exports.article_search = function(req, res) {
         var promise_array = keys.map(key => {
             var temp_query = Article.find({[key]: q}, projectors, options); // use regex and wildcards? not efficient though
             // apparently if a callback function is included in .exec() no promise is returned?
-            var temp_promise = temp_query.exec().then(result => {
-                // if (err) throw err;
-                return result;
+            var temp_promise = temp_query.exec()
+            .then(result => result, err => {
+                // alternative: Promise.prototype.catch()
+                throw err;
             });
             assert.ok(temp_promise instanceof Promise);
             return temp_promise;
         });
         // console.log('promise_array: ' + promise_array);
-        var promise = Promise.all(promise_array).then(results_array => {
+        var promise = Promise.all(promise_array)
+        .then(results_array => {
             // console.log('results_array: ' + results_array);
             var results = [];
             var i, len;
@@ -77,7 +81,9 @@ exports.article_search = function(req, res) {
                 results = results.concat(results_array[i]);
             }
             res.send(results);
-        })
+        }, err => {
+            throw err;
+        });
     }
 };
 
@@ -95,6 +101,7 @@ exports.article_create = function(req, res) {
 
 // create new article via GET - for testing only
 exports.article_create_get = function(req, res) {
+    // hope for automatic type conversion?
     var {author, title, desc, date, tags, text} = req.query;
     var doc = {author, title, desc, date, tags, text};
     var promise = Article.create(doc, (err, doc) => {
@@ -105,18 +112,43 @@ exports.article_create_get = function(req, res) {
 
 // update article via PATCH
 exports.article_update = function(req, res) {
-    
+    // Model.findOneAndUpdate(conditions, update, options).exec().then(results => {}, err => {});
 };
 
+// update article via GET - for testing only
+exports.article_update_get = function(req,res) {
+    console.log('executing update');
+    var id = req.params.articleId;
+    var doc = (req.query.doc === undefined) ? '{"author": "example update of author"}': req.query.doc; // doc should be a JSON string
+    var doc = JSON.parse(doc);
+    assert.ok(doc instanceof Object);
+    var query = Article.findOneAndUpdate({_id: id}, doc, {new: true});
+    query.exec((err, results) => {
+        if (err) throw error;
+        res.send(results);
+    });
+}
+
 // Delete article via DELETE
-// multiple remove methods, which one to support?
+// multiple remove methods, which one to use?
 // deletemany may be needed for removing user and his posts from db
+// Document.prototype.$isDeleted()
+// check drop, delete, remove in api(schema, connection, model, query, document) 
+// check if promise or query is returned depending if callback is executed, and if middleware is executed
+// Look into Model.bulkwrite(), Transform and delete
 exports.article_delete = function(req, res) {
     
 };
 
 // Delete article via GET - for testing only
 exports.article_delete_get = function(req, res) {
-
+    // Model.findOneAndRemove(conditions, options).exec().then(results => {}, err => {})
+    console.log('executing delete');
+    var id = req.params.articleId;
+    var query = Article.findOneAndRemove({_id: id});
+    query.exec((err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
 }
 
