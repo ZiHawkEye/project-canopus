@@ -21,7 +21,6 @@ class Blog extends React.Component {
 	}
 
 	handleChange(event) {
-        // sets the state to the result of the previous query
         // console.log('before: ' + this.state.value);
         this.setState({value: event.target.value});
         // console.log('after: ' + this.state.value);
@@ -32,14 +31,12 @@ class Blog extends React.Component {
 		var qs = encodeURI(this.state.value);
 		var uri = (qs === '') ? `q={}&is_json=true` : `q=${qs}&keys=['author', 'title', 'desc', 'tags', 'text']`;
         fetch(`/api/article/search?` + uri)
-            .then(res => res.json())
-            .then(result => {
-                this.setState({
-					posts: result
-				});
-            }, error => {
-				console.error(error);
+		.then(res => res.json())
+		.then(result => {
+			this.setState({
+				posts: result
 			});
+		}, error => console.error(error))
 	}
 	
 	handleScroll(event) {
@@ -47,6 +44,7 @@ class Blog extends React.Component {
 		// var height = this.blogRef.current.clientHeight;
 		var height = window.innerHeight;
 		
+		//when user scrolls to bottom of page, load more posts
 		if (height > rect.bottom) {
 			fetch(`/api/article/search?q={}&is_json=true&sort=-date&limit=10&skip=${this.state.skip}`)
 			.then(res => res.json())
@@ -58,10 +56,7 @@ class Blog extends React.Component {
 				this.setState(prevState => ({
 					skip: (parseInt(prevState.skip, 10) + 10).toString()
 				}));
-				}, 
-				(error) => {
-					console.error(error);
-			});
+				}, error => console.error(error));
 		}
 	}
 
@@ -72,10 +67,7 @@ class Blog extends React.Component {
 				this.setState({
 					posts: result
 				});
-			}, 
-			(error) => {
-				console.error(error);
-			});
+			}, error => console.error(error));
 
 		// never bind an external eventhandler inside a render method - rendering methods should only be concerned with logic pertaining to updating the dom
 		// bind listener in componentdidMount - that way it's only bound once

@@ -5,6 +5,8 @@ import Home from './Home';
 import About from './About';
 import Blog from './Blog';
 import Notes from './Notes';
+import Signup from './Signup';
+import Login from './Login';
 
 export default () => (
 	<BrowserRouter>
@@ -13,6 +15,8 @@ export default () => (
 		<Route path='/about' component={About} />
 		<Route path='/blog' component={Blog} />
 		<Route path='/notes' component={Notes} />
+		<Route path='/signup' component={Signup} />
+		<Route path='/login' component={Login} />
 	</Switch>
 	</BrowserRouter>
 );
