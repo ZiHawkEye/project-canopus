@@ -7,18 +7,21 @@ class Blog extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.blogRef = React.createRef();
+
 		this.state = {
 			posts: [],
-			value: ""
+			value: "",
+			skip: "0"
 		};
 
 		this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
 	}
 
 	handleChange(event) {
         // sets the state to the result of the previous query
-        // need to replace + with spaces
         // console.log('before: ' + this.state.value);
         this.setState({value: event.target.value});
         // console.log('after: ' + this.state.value);
@@ -37,10 +40,33 @@ class Blog extends React.Component {
             }, error => {
 				console.error(error);
 			});
-    }
+	}
+	
+	handleScroll(event) {
+		var rect = this.blogRef.current.getBoundingClientRect();
+		// var height = this.blogRef.current.clientHeight;
+		var height = window.innerHeight;
+		
+		if (height > rect.bottom) {
+			fetch(`/api/article/search?q={}&is_json=true&sort=-date&limit=10&skip=${this.state.skip}`)
+			.then(res => res.json())
+			.then(result => {
+				console.log(this.state.posts + result);
+				this.setState(prevState => ({
+					posts: prevState.posts.concat(result)
+				}));
+				this.setState(prevState => ({
+					skip: (parseInt(prevState.skip, 10) + 10).toString()
+				}));
+				}, 
+				(error) => {
+					console.error(error);
+			});
+		}
+	}
 
 	componentDidMount() {
-		fetch('/api/article/search?q={}&is_json=true')
+		fetch('/api/article/search?q={}&is_json=true&sort=-date&limit=10')
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
@@ -50,6 +76,10 @@ class Blog extends React.Component {
 			(error) => {
 				console.error(error);
 			});
+
+		// never bind an external eventhandler inside a render method - rendering methods should only be concerned with logic pertaining to updating the dom
+		// bind listener in componentdidMount - that way it's only bound once
+		window.addEventListener('scroll', this.handleScroll);
 	}
 
 	render() {
@@ -62,7 +92,7 @@ class Blog extends React.Component {
 											text={post.text} />);
 	
 		return (
-				<div className='blog'>
+				<div className='blog' ref={this.blogRef}>
                     <div className='sidebar' onChange={this.handleChange} onSubmit={this.handleSubmit}>
 					<Search />
 					</div>
