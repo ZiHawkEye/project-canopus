@@ -35,7 +35,7 @@ class Post extends React.Component {
 
     render() {
         return (
-            <div className='columns'>
+            <div className='post-container'>
             <div className={this.state.classname}>
                 <span className='title'> {this.props.title} </span><br/>
                 <span className='desc'> {this.props.desc} </span><br/>
@@ -45,10 +45,12 @@ class Post extends React.Component {
                 multiple eventhandlers to same event or multiple events to same element? */}
                 <button className="read-more" onClick={this.handleClick}> {this.state.btnTxt} </button>
             </div>
+            <div className='details-container'>
             <div className='details'>
                 <span className='author'> {this.props.author} </span><br/>
                 <span className='date'> {this.props.date} </span><br/>
                 <span className='tags'> {this.props.tags} </span><br/>
+            </div>
             </div>
             </div>
         );

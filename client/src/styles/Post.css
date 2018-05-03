@@ -1,5 +1,5 @@
 /* layout of post */
-.columns {
+.post-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 1em;
@@ -9,6 +9,9 @@
 .details {
     color: grey;
     font-size: 0.8em;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 .details > .author {
@@ -41,9 +44,9 @@
 
 .post > .read-more { 
     /* centralize button */
-	position: absolute; 
-    bottom: 0; 
-    text-align: center; 
+	position: absolute;
+    bottom: 0;
+    text-align: center;
 	
     font-size: 0.8rem;
     font-weight: 600;
@@ -53,14 +56,14 @@
     padding: 1em 2em;
     border: none;
     border-radius: 0.5em;
-    margin: 0; 
+    margin: 0;
     
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
 .read-more:hover {
-	background-color: #ffd106c0;
+	background-color: #99e1d9;
 }
 
 /* when readmore is clicked */

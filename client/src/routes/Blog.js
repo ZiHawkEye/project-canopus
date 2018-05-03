@@ -25,15 +25,15 @@ class Blog extends React.Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-        var qs = encodeURI(this.state.value);
-        fetch(`/api/article/search?q=${qs}&keys=['author', 'title', 'desc', 'tags', 'text']`)
+		event.preventDefault();
+		var qs = encodeURI(this.state.value);
+		var uri = (qs === '') ? `q={}&is_json=true` : `q=${qs}&keys=['author', 'title', 'desc', 'tags', 'text']`;
+        fetch(`/api/article/search?` + uri)
             .then(res => res.json())
             .then(result => {
                 this.setState({
 					posts: result
 				});
-                console.log(this.state.value);
             }, error => {
 				console.error(error);
 			});
