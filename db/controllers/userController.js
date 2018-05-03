@@ -4,17 +4,20 @@ var User = require('../models/user');
 
 // search for a user via POST
 exports.user_search = function(req, res) {
-    var {username, password} = req.query;
-    User.findOne({username, password}).exec((err, results) => {
+    var {username, password} = req.body;
+    var user = (password === undefined) ? {username} : {username, password};
+    User.findOne(user).exec((err, results) => {
         if (err) throw err;
-        res.send(results);
+        var verdict = (results === null) ? false : true;
+        res.send(verdict);
     })
 };
 
 // search for a user via GET - for testing only
 exports.user_search_get = function(req, res) {
     var {username, password} = req.query;
-    User.findOne({username, password}).exec((err, results) => {
+    var user = (password === undefined) ? {username} : {username, password};
+    User.findOne(user).exec((err, results) => {
         if (err) throw err;
         res.send(results);
     })
@@ -25,6 +28,7 @@ exports.user_create = function(req, res) {
     var {username, password} = req.body;
     var promise = User.create({username, password}, (err, results) => {
         if (err) throw err;
+        console.log("created");
         res.send(results);
     })
 };

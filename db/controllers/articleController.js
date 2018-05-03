@@ -40,12 +40,15 @@ exports.article_search = function(req, res) {
             delete options[option];
         }
     }
+    // manual type conversion follows
+    options.limit = (parseInt(options.limit) == NaN) ? 0 : parseInt(options.limit);
+    options.skip = (parseInt(options.skip) == NaN) ? 0 : parseInt(options.skip);
 
     // search all fields with same values(no json), search particular fields with same values(no json), 
     // search particular fields with particular values and modifiers(uses json)
     var is_json = (req.query.is_json == "true") ? true : false;
     if(is_json) {
-        var conditions = (req.query.conditions === undefined) ? {} : JSON.parse(req.query.conditions); // should be a json string - needs further validation and processing
+        var conditions = (req.query.conditions === undefined || req.query.conditions === "") ? {} : JSON.parse(decodeURI(req.query.conditions)); // should be a json string - needs further validation and processing
         assert.ok(conditions instanceof Object);
         var query = Article.find(conditions, projectors, options);
         var promise = query.exec((err, results) => {
@@ -53,7 +56,7 @@ exports.article_search = function(req, res) {
             res.send(results);
         });
     } else {
-        var q = (req.query.q === undefined) ? "": req.query.q ;
+        var q = (req.query.q === undefined) ? "" : req.query.q; // don't need decodeURI(req.query.q)
         var keys = (req.query.keys === undefined) ? ["author", "title", "desc", "date", "tags", "text"] : eval(req.query.keys); // may need further validation and sanitisation
         assert.ok(keys instanceof Array);
         var promise_array = keys.map(key => {
@@ -108,6 +111,15 @@ exports.article_create_get = function(req, res) {
 // update article via PATCH
 exports.article_update = function(req, res) {
     // Model.findOneAndUpdate(conditions, update, options).exec().then(results => {}, err => {});
+    var id = req.params.articleId;
+    var doc = (req.query.doc === undefined) ? '{"author": "example update of author"}': req.body.doc; // doc should be a JSON string
+    var doc = JSON.parse(doc);
+    assert.ok(doc instanceof Object);
+    var query = Article.findOneAndUpdate({_id: id}, doc, {new: true});
+    query.exec((err, results) => {
+        if (err) throw error;
+        res.send(results);
+    });
 };
 
 // update article via GET - for testing only
@@ -131,7 +143,13 @@ exports.article_update_get = function(req,res) {
 // check if promise or query is returned depending if callback is executed, and if middleware is executed
 // Look into Model.bulkwrite(), Transform and delete
 exports.article_delete = function(req, res) {
-    
+    // Model.findOneAndRemove(conditions, options).exec().then(results => {}, err => {})
+    var id = req.params.articleId;
+    var query = Article.findOneAndRemove({_id: id});
+    query.exec((err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });    
 };
 
 // Delete article via GET - for testing only

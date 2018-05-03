@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-
 //database functionality defined below
 // database url
 let uri = "mongodb://ding:dong@ds243008.mlab.com:43008/canoopuss";
@@ -19,6 +18,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const app = express();
 
 app.set("port", process.env.PORT || 3001);
+
+// body parse middleware for parsing req.body
+app.use(express.json());
 
 // imports route modules
 // remember to serve the static react app eventually on each route (except /api)
