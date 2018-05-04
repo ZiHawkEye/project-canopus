@@ -10,12 +10,13 @@ There will also be notes
 
 stay tuned for live version @[Project Canopus] (projectcanopus.com)
 ### Things to be done:
-- [ ] Basic elements for index page
 - [ ] A general style CSS for all sites
-- [ ] About page
-- [ ] Navbar.html
-- [ ] A working back-end
-- [ ] more entries for this todo list
+- [ ] Backend: finish controller methods for article model (display article, search, create, modify, delete), add/modify if necessary and update routes accordingly
+- [ ] Backend: finish controller methods for user model (search for a user, create, modify, delete), add/modify if necessary and update routes accordingly
+- [ ] Backend: implement sanitisation, validation of input and error handling if not sufficient
+- [ ] Frontend: implement some components that can interface with the API
+- [ ] Eventually convert React App into a static package with npm run build that can be served with Node server for deployment
+
 #### Updates
 >ver. 18.4.01:
 >   we have our own logo!

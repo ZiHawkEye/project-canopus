@@ -7,16 +7,16 @@ class Home extends React.Component {
 		super(props)
 
 		this.state = {
-			popposts: []
+			cards: []
 		}
 	}
 
 	componentDidMount() {
-		fetch("/api/card")
+		fetch("/api/article/search?q={}&is_json=true&projectors=author+title+desc+date+tags")
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
-					popposts: result.cards
+					cards: result
 				})
 			}, 
 			(error) => {
@@ -25,8 +25,8 @@ class Home extends React.Component {
 	}
 
 	render() {
-		var jsonposts = this.state.popposts
-		var feed = jsonposts.map(post => <Card img={post.img} title={post.title} topic={post.topic} desc={post.desc} />)
+		var jsonposts = this.state.cards;
+		var feed = jsonposts.map(post => <Card img={post.img} title={post.title} topic={post.topic} desc={post.desc} />);
 
 		return (
 			<div className='home'>
