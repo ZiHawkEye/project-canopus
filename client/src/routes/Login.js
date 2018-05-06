@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../styles/Login.css';
+import '../styles/Login.css';
 
 class Login extends React.Component {
     // I don't think this is very secure - hashing should be done client side?
@@ -8,7 +8,8 @@ class Login extends React.Component {
         
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            error_message: ""
         }
 
         this.handleSubmit = this.handleSubmit.bind(this); 
@@ -32,8 +33,14 @@ class Login extends React.Component {
         .then(res => res.json(), error => console.error(error))
         .then(verdict => {
             if (verdict) {
+                this.setState({
+                    error_message: ""
+                });
                 console.log("Success");
             } else {
+                this.setState({
+                    error_message: "Incorrect username or password"
+                });
                 console.log("Failed");
             }
         })
@@ -41,7 +48,8 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="login" onSubmit={this.handleSubmit}>
+                <span style={{"color": "red"}}>{this.state.error_message}</span>
                 <input type='text' placeholder='Username' onChange={this.handleChange.bind(this, "username")}/>
                 <input type='password' placeholder='Password' onChange={this.handleChange.bind(this, "password")}/>
                 <input type='submit' value="Login"/>

@@ -49,7 +49,7 @@ class Post extends React.Component {
             <div className='details'>
                 <span className='author'> {this.props.author} </span><br/>
                 <span className='date'> {this.props.date} </span><br/>
-                <span className='tags'> {this.props.tags} </span><br/>
+                <span className='tags'> {this.props.tags} </span>
             </div>
             </div>
             </div>

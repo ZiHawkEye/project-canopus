@@ -3,6 +3,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 1em;
+    padding: 1em 0 1em 0;
 }
 
 /* details styling */
@@ -37,7 +38,6 @@
 	max-height: 10em;
 	position: relative;
 	overflow: hidden;
-    padding: 20px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.8s;
 }
@@ -51,7 +51,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: #24272b;
-    background: transparent;
+    background: #6187998a;
     
     padding: 1em 2em;
     border: none;

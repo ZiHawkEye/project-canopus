@@ -1,0 +1,17 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    background: #ccc;
+    width: 40%;
+    /* centralizes form */
+    margin: auto;
+    padding: 2em;
+    border-radius: 0.2em;
+}
+
+.login > input {
+    margin: 0.5em;
+    padding: 0.5em;
+    border: none;
+    border-radius: inherit;
+}

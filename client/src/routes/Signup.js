@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../styles/Signup.css';
+import '../styles/Signup.css';
 
 class Signup extends React.Component {
     // I don't think this is very secure - hashing should be done client side?
@@ -73,12 +73,12 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="signup" onSubmit={this.handleSubmit}>
                 {/* {this.state.username}<br/>
                 {this.state.password}<br/>
                 {this.state.confirm}<br/> */}
-                <input type='text' placeholder='Username' onChange={this.handleChange.bind(this, "username")}/> {this.state.username_error}
-                <input type='password' placeholder='Password' onChange={this.handleChange.bind(this, "password")}/> {this.state.password_error}
+                <input type='text' placeholder='Username' onChange={this.handleChange.bind(this, "username")}/> <span style={{"color": "red"}}>{this.state.username_error}</span>
+                <input type='password' placeholder='Password' onChange={this.handleChange.bind(this, "password")}/> <span style={{"color": "red"}}>{this.state.password_error}</span>
                 <input type='password' placeholder='Confirm password' onChange={this.handleChange.bind(this, "confirm")}/>
                 <input type='submit' value="Register"/>
             </form>
