@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header';
 import Routes from './routes';
 import Navbar from './components/Navbar';
 
@@ -9,12 +10,13 @@ class App extends React.Component {
   // start node server and webpack server separately for app to function
 
   render() {
-    return(
+    return (
       <div className='container'>
+        <Header />
         <Navbar />
         <Routes />
       </div>
-      );
+    );
   }
 }
 
